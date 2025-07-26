@@ -67,6 +67,15 @@ function span<T>(xs: List<T>, predicate: (x: T) => boolean): [List<T>, List<T>] 
     return [takeWhile(xs, predicate), dropWhile(xs, predicate)];
 }
 
+function remove<T>(xs: List<T>, index: number): List<T> {
+    return concat(take(xs, index), drop(xs, index + 1));
+}
+
+function concat<T>(xs: List<T>, ys: List<T>): List<T> {
+    if (xs === null) return ys;
+    return { data: xs.data, next: concat(xs.next, ys) };
+}
+
 function toArray<T>(xs: List<T>): T[] {
     if (xs === null) return [];
     return [xs.data, ...toArray<T>(xs.next)];
